@@ -1,0 +1,32 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #5aa5f1;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgb(159, 159, 159);
+}
+
+.logo {
+  display: flex;
+}
+
+.logo > img {
+  height: 60px;
+  width: 60px;
+}
+
+.nav a {
+  color: white;
+  margin-left: 1rem;
+  text-decoration: none;
+  background-color: #ff8856;
+}
+
+.nav a:hover {
+  background-color: #f95007;
+}

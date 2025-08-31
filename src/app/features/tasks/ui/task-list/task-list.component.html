@@ -1,0 +1,26 @@
+<ul
+  *ngIf="tasks?.length; else empty"
+  style="list-style: none; padding: 0; display: grid; gap: 0.75rem"
+>
+  <li
+    *ngFor="let t of tasks; trackBy: trackById"
+    style="border: 1px solid #eee; padding: 1rem; border-radius: 0.5rem"
+  >
+    <div style="display: flex; justify-content: space-between; align-items: center">
+      <div>
+        <strong>{{ t.title }}</strong>
+        <div>{{ t.description }}</div>
+        <small>Assigned: {{ t.assignedUser || '—' }}</small>
+      </div>
+      <div>
+        <label>
+          Status:
+          <select [value]="t.status" (change)="onStatus(t.id!, $any($event.target).value)">
+            <option *ngFor="let s of statuses" [value]="s">{{ labels[s] }}</option>
+          </select>
+        </label>
+      </div>
+    </div>
+  </li>
+</ul>
+<ng-template #empty><p>No tasks yet.</p></ng-template>

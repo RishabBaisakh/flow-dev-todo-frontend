@@ -1,0 +1,15 @@
+<section style="max-width: 800px; margin: 2rem auto; padding: 1rem">
+  <h1>To-Do</h1>
+  <app-task-form (create)="onCreate($event)"></app-task-form>
+
+  <ng-container *ngIf="store.loading(); else list">
+    <p>Loading…</p>
+  </ng-container>
+  <ng-template #list>
+    <app-task-list
+      [tasks]="store.tasks()"
+      (changeStatus)="onChangeStatus($event.id, $event.status)"
+    >
+    </app-task-list>
+  </ng-template>
+</section>

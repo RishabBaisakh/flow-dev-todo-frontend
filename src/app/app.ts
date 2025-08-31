@@ -1,10 +1,10 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
+import { TasksPage } from './features/tasks/tasks.page';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.html',
-  styleUrl: './app.css',
+  standalone: true,
+  imports: [TasksPage],
+  template: `<app-tasks></app-tasks>`,
 })
-export class App {
-  protected readonly title = signal('todo-frontend');
-}
+export class App {}

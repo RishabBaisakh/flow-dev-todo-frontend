@@ -1,26 +1,61 @@
-<ul
-  *ngIf="tasks?.length; else empty"
-  style="list-style: none; padding: 0; display: grid; gap: 0.75rem"
->
-  <li
-    *ngFor="let t of tasks; trackBy: trackById"
-    style="border: 1px solid #eee; padding: 1rem; border-radius: 0.5rem"
-  >
-    <div style="display: flex; justify-content: space-between; align-items: center">
+<section class="section-container">
+  <!-- <ul *ngIf="tasks?.length; else empty">
+    <li *ngFor="let t of tasks; trackBy: trackById">
       <div>
-        <strong>{{ t.title }}</strong>
-        <div>{{ t.description }}</div>
-        <small>Assigned: {{ t.assignedUser || '—' }}</small>
+        <div>
+          <strong>{{ t.title }}</strong>
+          <div>{{ t.description }}</div>
+          <small>Assigned: {{ t.assignedUser || '—' }}</small>
+        </div>
+        <div>
+          <label>
+            Status:
+            <select [value]="t.status" (change)="onStatus(t.id!, $any($event.target).value)">
+              <option *ngFor="let s of statuses" [value]="s">{{ labels[s] }}</option>
+            </select>
+          </label>
+        </div>
       </div>
-      <div>
-        <label>
-          Status:
-          <select [value]="t.status" (change)="onStatus(t.id!, $any($event.target).value)">
-            <option *ngFor="let s of statuses" [value]="s">{{ labels[s] }}</option>
-          </select>
-        </label>
-      </div>
-    </div>
-  </li>
-</ul>
-<ng-template #empty><p>No tasks yet.</p></ng-template>
+    </li>
+  </ul> -->
+  <ng-template #empty><p>No tasks yet.</p></ng-template>
+  <table mat-table [dataSource]="tableDataSource">
+    <ng-container matColumnDef="-">
+      <th class="custom-column-width" mat-header-cell *matHeaderCellDef></th>
+      <td class="custom-column-width" mat-cell *matCellDef="let task">
+        <ng-container *ngIf="task.status === 'Completed'; else notCompleted">
+          <mat-icon class="completed">check_circle_outline</mat-icon>
+        </ng-container>
+
+        <ng-template #notCompleted>
+          <mat-icon>radio_button_unchecked</mat-icon>
+        </ng-template>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="title">
+      <th class="title-column" mat-header-cell *matHeaderCellDef>Title</th>
+      <td class="title-column" mat-cell *matCellDef="let task">{{ task.title }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="assignee">
+      <th class="custom-column-width" mat-header-cell *matHeaderCellDef>Assignee</th>
+      <td class="custom-column-width" mat-cell *matCellDef="let task">{{ task.assignedUser }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th class="custom-column-width" mat-header-cell *matHeaderCellDef>Status</th>
+      <td class="custom-column-width" mat-cell *matCellDef="let task">
+        <span [ngClass]="getStatusStyleClass(task.status)" class="status-chip">
+          {{ getStatusLabel(task.status) }}
+        </span>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator showFirstLastButtons hidePageSize aria-label="Select page of periodic elements">
+  </mat-paginator>
+</section>

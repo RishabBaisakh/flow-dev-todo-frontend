@@ -1,9 +1,0 @@
-<form [formGroup]="form" (ngSubmit)="submit()" style="display: grid; gap: 0.5rem; margin: 1rem 0">
-  <input formControlName="title" placeholder="Title" />
-  <textarea formControlName="description" placeholder="Description"></textarea>
-  <input formControlName="assignedUser" placeholder="Assigned user (optional)" />
-  <select formControlName="status">
-    <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
-  </select>
-  <button type="submit" [disabled]="form.invalid">Add Task</button>
-</form>

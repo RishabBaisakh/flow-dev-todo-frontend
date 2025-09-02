@@ -1,0 +1,40 @@
+.full-width {
+  width: 100%;
+}
+
+mat-dialog-content {
+  padding-top: 8px !important;
+  padding-bottom: 0;
+}
+
+h2[mat-dialog-title] {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin: 0;
+  color: #333;
+}
+
+mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 8px 24px 16px 24px;
+}
+
+button[matButton] {
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+button[matButton]:first-of-type {
+  color: #666;
+}
+
+button[matButton]:last-of-type {
+  background-color: #1976d2;
+  color: white;
+}
+
+button[matButton]:last-of-type:hover {
+  background-color: #1565c0;
+}

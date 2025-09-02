@@ -1,0 +1,19 @@
+.custom-column-width {
+  white-space: nowrap;
+  width: 1%;
+  flex: 0 0 auto !important;
+}
+
+.title-column {
+  width: 20%;
+}
+
+.center-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.completed {
+  color: #ff8856;
+}

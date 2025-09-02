@@ -1,4 +1,37 @@
-/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: aliceblue;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.section-container {
+  background-color: white;
+  box-shadow: 0 2px 6px rgb(193, 202, 211);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.status-chip {
+  padding: 5px 10px;
+  border-radius: 20px;
+  color: white;
+}
+
+.app-background-color-todo {
+  background-color: #f4b236;
+}
+
+.app-background-color-inprogress {
+  background-color: #2196f3;
+}
+
+.app-background-color-completed {
+  background-color: #4caf50;
+}
+
+.w-full {
+  width: 100%;
+}

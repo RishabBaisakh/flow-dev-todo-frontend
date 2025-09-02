@@ -1,18 +1,29 @@
 import { Injectable, signal } from '@angular/core';
 import { TaskApi } from '../services/task.api';
-import { Task, CreateTaskDto, UpdateTaskStatusDto } from '../../shared/models/task';
+import {
+  Task,
+  CreateTaskDto,
+  UpdateTaskStatusDto,
+  PaginatedResponse,
+} from '../../shared/models/task';
 
 @Injectable({ providedIn: 'root' })
 export class TasksStore {
   readonly tasks = signal<Task[]>([]);
   readonly loading = signal(false);
+  readonly totalTasks = signal(0);
+  readonly currentPage = signal(1);
 
   constructor(private api: TaskApi) {}
 
-  load(): void {
+  load(pageNumber = 1, pageSize = 5): void {
     this.loading.set(true);
-    this.api.getAll().subscribe({
-      next: (items) => this.tasks.set(items),
+    this.api.getAllPaginated(pageNumber, pageSize).subscribe({
+      next: (res: PaginatedResponse) => {
+        this.tasks.set(res.tasks);
+        this.totalTasks.set(res.totalTasks);
+        this.currentPage.set(res.pageNumber);
+      },
       error: () => this.loading.set(false),
       complete: () => this.loading.set(false),
     });

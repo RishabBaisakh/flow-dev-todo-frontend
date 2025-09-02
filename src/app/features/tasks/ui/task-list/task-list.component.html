@@ -1,32 +1,11 @@
 <section class="section-container">
-  <!-- <ul *ngIf="tasks?.length; else empty">
-    <li *ngFor="let t of tasks; trackBy: trackById">
-      <div>
-        <div>
-          <strong>{{ t.title }}</strong>
-          <div>{{ t.description }}</div>
-          <small>Assigned: {{ t.assignedUser || '—' }}</small>
-        </div>
-        <div>
-          <label>
-            Status:
-            <select [value]="t.status" (change)="onStatus(t.id!, $any($event.target).value)">
-              <option *ngFor="let s of statuses" [value]="s">{{ labels[s] }}</option>
-            </select>
-          </label>
-        </div>
-      </div>
-    </li>
-  </ul> -->
-  <ng-template #empty><p>No tasks yet.</p></ng-template>
-  <table mat-table [dataSource]="tableDataSource">
+  <table mat-table [dataSource]="tasks">
     <ng-container matColumnDef="-">
-      <th class="custom-column-width" mat-header-cell *matHeaderCellDef></th>
-      <td class="custom-column-width" mat-cell *matCellDef="let task">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let task">
         <ng-container *ngIf="task.status === 'Completed'; else notCompleted">
           <mat-icon class="completed">check_circle_outline</mat-icon>
         </ng-container>
-
         <ng-template #notCompleted>
           <mat-icon>radio_button_unchecked</mat-icon>
         </ng-template>
@@ -34,18 +13,18 @@
     </ng-container>
 
     <ng-container matColumnDef="title">
-      <th class="title-column" mat-header-cell *matHeaderCellDef>Title</th>
-      <td class="title-column" mat-cell *matCellDef="let task">{{ task.title }}</td>
+      <th mat-header-cell *matHeaderCellDef>Title</th>
+      <td mat-cell *matCellDef="let task">{{ task.title }}</td>
     </ng-container>
 
     <ng-container matColumnDef="assignee">
-      <th class="custom-column-width" mat-header-cell *matHeaderCellDef>Assignee</th>
-      <td class="custom-column-width" mat-cell *matCellDef="let task">{{ task.assignedUser }}</td>
+      <th mat-header-cell *matHeaderCellDef>Assignee</th>
+      <td mat-cell *matCellDef="let task">{{ task.assignedUser }}</td>
     </ng-container>
 
     <ng-container matColumnDef="status">
-      <th class="custom-column-width" mat-header-cell *matHeaderCellDef>Status</th>
-      <td class="custom-column-width" mat-cell *matCellDef="let task">
+      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <td mat-cell *matCellDef="let task">
         <span [ngClass]="getStatusStyleClass(task.status)" class="status-chip">
           {{ getStatusLabel(task.status) }}
         </span>
@@ -55,7 +34,38 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
   </table>
+  <div class="custom-paginator">
+    <mat-icon class="clickable" (click)="goToPage(0)" [class.disabled]="pageIndex === 0">
+      first_page
+    </mat-icon>
+    <mat-icon class="clickable" (click)="prevPage()" [class.disabled]="pageIndex === 0">
+      chevron_left
+    </mat-icon>
 
-  <mat-paginator showFirstLastButtons hidePageSize aria-label="Select page of periodic elements">
-  </mat-paginator>
+    <ng-container *ngFor="let page of pages">
+      <span
+        class="clickable page-number"
+        (click)="goToPage(page)"
+        [class.active]="pageIndex === page"
+      >
+        {{ page + 1 }}
+      </span>
+    </ng-container>
+
+    <mat-icon class="clickable" (click)="nextPage()" [class.disabled]="pageIndex >= totalPages - 1">
+      chevron_right
+    </mat-icon>
+
+    <mat-icon
+      class="clickable"
+      (click)="goToPage(totalPages - 1)"
+      [class.disabled]="pageIndex >= totalPages - 1"
+    >
+      last_page
+    </mat-icon>
+    <!-- TODO: think of something different -->
+    <!-- <span class="page-info">
+      {{ pageIndex + 1 }} of {{ totalPages }} | {{ totalTasks }} tasks
+    </span> -->
+  </div>
 </section>

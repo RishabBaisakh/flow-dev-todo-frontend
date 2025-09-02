@@ -17,3 +17,55 @@
 .completed {
   color: #ff8856;
 }
+
+.custom-paginator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  justify-content: end;
+}
+
+.custom-paginator mat-icon.clickable {
+  cursor: pointer;
+  user-select: none;
+  font-size: 24px;
+  color: #928c8c;
+}
+
+.custom-paginator mat-icon.clickable:hover {
+  color: #1976d2;
+}
+
+.custom-paginator mat-icon.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.custom-paginator mat-icon.page-number.active {
+  font-weight: bold;
+  color: #1976d2;
+}
+
+.page-number {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+  user-select: none;
+  color: #555;
+}
+
+.page-number:hover {
+  background-color: rgba(25, 118, 210, 0.1);
+  color: #1976d2;
+}
+
+.page-number.active {
+  font-weight: bold;
+  background-color: #1976d2;
+  color: white;
+}

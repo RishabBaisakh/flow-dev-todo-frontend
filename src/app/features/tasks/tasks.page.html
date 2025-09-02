@@ -5,14 +5,15 @@
     <button matButton="elevated" (click)="openDialog()">Add New</button>
   </div>
 
-  <!-- <app-task-form (create)="onCreate($event)"></app-task-form> -->
-
   <ng-container *ngIf="store.loading(); else list">
     <p>Loading…</p>
   </ng-container>
   <ng-template #list>
     <app-task-list
       [tasks]="store.tasks()"
+      [totalTasks]="store.totalTasks()"
+      [pageIndex]="store.currentPage() - 1"
+      (pageChange)="store.load($event.page, $event.size)"
       (changeStatus)="onChangeStatus($event.id, $event.status)"
     >
     </app-task-list>

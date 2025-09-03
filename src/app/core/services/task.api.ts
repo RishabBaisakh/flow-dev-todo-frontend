@@ -6,19 +6,22 @@ import {
   Task,
   UpdateTaskStatusDto,
 } from '../../shared/models/task';
-import { Observable } from 'rxjs';
+import { delay, Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class TaskApi {
   private http = inject(HttpClient);
-  private base = '/tasks';
+  private base = environment.apiBaseUrl + '/tasks';
 
   getAll(): Observable<Task[]> {
     return this.http.get<Task[]>(this.base);
   }
 
   getAllPaginated(pageNumber = 1, pageSize = 5): Observable<PaginatedResponse> {
-    return this.http.get<PaginatedResponse>(`/tasks?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+    return this.http
+      .get<PaginatedResponse>(`${this.base}?pageNumber=${pageNumber}&pageSize=${pageSize}`)
+      .pipe(delay(3000));
   }
 
   create(dto: CreateTaskDto): Observable<Task> {

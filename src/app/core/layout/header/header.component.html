@@ -7,10 +7,21 @@
   <nav class="nav">
     <a href="#" matButton="filled">
       <mat-icon>group</mat-icon>
-      My Team Members</a
-    >
+      My Team Members
+    </a>
+
     <div class="github-icon" (click)="openDialog()">
       <img src="assets/github-mark.svg" />
     </div>
+
+    <div [matMenuTriggerFor]="profileMenu" class="profile-icon">
+      <mat-icon>account_circle</mat-icon>
+    </div>
+
+    <mat-menu #profileMenu="matMenu">
+      <div class="menu-content">
+        <p>{{ getGreeting() }}</p>
+      </div>
+    </mat-menu>
   </nav>
 </header>

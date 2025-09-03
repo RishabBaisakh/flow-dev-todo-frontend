@@ -6,6 +6,7 @@ import {
   UpdateTaskStatusDto,
   PaginatedResponse,
 } from '../../shared/models/task';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class TasksStore {
@@ -16,17 +17,23 @@ export class TasksStore {
 
   constructor(private api: TaskApi) {}
 
-  load(pageNumber = 1, pageSize = 5): void {
+  async load(pageNumber = 1, pageSize = 5) {
     this.loading.set(true);
-    this.api.getAllPaginated(pageNumber, pageSize).subscribe({
-      next: (res: PaginatedResponse) => {
-        this.tasks.set(res.tasks);
-        this.totalTasks.set(res.totalTasks);
-        this.currentPage.set(res.pageNumber);
-      },
-      error: () => this.loading.set(false),
-      complete: () => this.loading.set(false),
-    });
+
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 800));
+
+      const res: PaginatedResponse = await firstValueFrom(
+        this.api.getAllPaginated(pageNumber, pageSize)
+      )!; // assert non-null
+      this.tasks.set(res.tasks);
+      this.totalTasks.set(res.totalTasks);
+      this.currentPage.set(res.pageNumber);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      this.loading.set(false);
+    }
   }
 
   add(dto: CreateTaskDto): void {

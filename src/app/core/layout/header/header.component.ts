@@ -5,16 +5,19 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { GithubReposDialog } from '../../../features/github/github-repos-dialog/github-repos-dialog.component';
+import { AdminStore } from '../../state/admin.store';
+import { MatMenu, MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatButtonModule, MatIconModule],
+  imports: [MatButtonModule, MatIconModule, MatMenuModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
   readonly dialog = inject(MatDialog);
+  adminStore = inject(AdminStore);
 
   constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
     this.matIconRegistry.addSvgIcon(
@@ -23,7 +26,16 @@ export class HeaderComponent {
     );
   }
 
+  getGreeting(): string {
+    const userName = this.adminStore.adminUser?.name || 'User';
+    const hour = new Date().getHours();
+
+    if (hour < 12) return `Good morning, ${userName}! 🌅`;
+    if (hour < 18) return `Good afternoon, ${userName}! ☀️`;
+    return `Good evening, ${userName}! 🌙`;
+  }
+
   openDialog(): void {
-    const dialogRef = this.dialog.open(GithubReposDialog);
+    this.dialog.open(GithubReposDialog);
   }
 }

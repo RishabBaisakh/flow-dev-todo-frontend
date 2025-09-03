@@ -1,3 +1,4 @@
+/* ===== Header ===== */
 .header {
   display: flex;
   justify-content: space-between;
@@ -11,8 +12,11 @@
   box-shadow: 0 2px 4px rgb(159, 159, 159);
 }
 
+/* ===== Logo ===== */
 .logo {
   display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .logo > img {
@@ -20,36 +24,86 @@
   width: 60px;
 }
 
+/* ===== Navigation ===== */
 .nav {
   display: flex;
   align-items: center;
+  gap: 1rem; /* space between nav items */
+  flex-wrap: nowrap;
+  overflow: visible;
 }
 
+/* Links */
 .nav a {
   color: white;
-  margin-left: 1rem;
   text-decoration: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
   background-color: #ff8856;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: background-color 0.2s;
 }
 
 .nav a:hover {
   background-color: #f95007;
 }
 
+/* GitHub Icon */
 .github-icon {
-  margin-left: 20px;
+  width: 38px;
+  height: 38px;
   border: 2px solid #ff8856;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
   cursor: pointer;
-}
-
-.github-icon:hover {
-  border: 2px solid #f95007;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s;
 }
 
 .github-icon img {
-  width: 40px;
-  height: 40px;
+  width: 39px;
+  height: 39px;
+}
+
+.github-icon:hover {
+  border-color: #f95007;
+}
+
+/* Profile Icon (Material Icon inside circle) */
+.profile-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ff8856;
+  cursor: pointer;
+}
+
+.profile-icon mat-icon {
+  display: block;
+  font-size: 48px;
+  height: 45px;
+  width: 45px;
+}
+
+.profile-icon mat-icon:hover {
+  color: #f95007;
+}
+
+.menu-content {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.menu-content p {
+  margin: 0;
+  width: auto;
+  white-space: nowrap;
 }

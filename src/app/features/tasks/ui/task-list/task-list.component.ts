@@ -21,6 +21,7 @@ export class TaskListComponent {
   @Input() totalTasks = 0;
   @Input() pageSize = 5;
   @Input() pageIndex = 0;
+  @Input() loading: boolean | null = false;
 
   @Output() pageChange = new EventEmitter<{ page: number; size: number }>();
   @Output() changeStatus = new EventEmitter<{ id: string; status: TaskStatus }>();
@@ -31,6 +32,10 @@ export class TaskListComponent {
 
   get totalPages(): number {
     return Math.ceil(this.totalTasks / this.pageSize);
+  }
+
+  get isLoading(): boolean {
+    return this.loading ?? false;
   }
 
   get pages(): number[] {

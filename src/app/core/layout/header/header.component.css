@@ -20,6 +20,11 @@
   width: 60px;
 }
 
+.nav {
+  display: flex;
+  align-items: center;
+}
+
 .nav a {
   color: white;
   margin-left: 1rem;
@@ -29,4 +34,22 @@
 
 .nav a:hover {
   background-color: #f95007;
+}
+
+.github-icon {
+  margin-left: 20px;
+  border: 2px solid #ff8856;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.github-icon:hover {
+  border: 2px solid #f95007;
+}
+
+.github-icon img {
+  width: 40px;
+  height: 40px;
 }

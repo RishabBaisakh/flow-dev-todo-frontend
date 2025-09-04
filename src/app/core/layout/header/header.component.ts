@@ -7,6 +7,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { GithubReposDialog } from '../../../features/github/github-repos-dialog/github-repos-dialog.component';
 import { AdminStore } from '../../state/admin.store';
 import { MatMenu, MatMenuModule } from '@angular/material/menu';
+import { TeamDialogComponent } from '../../../features/team-members/team-members-dialog/team-members-dialog.component';
 
 @Component({
   selector: 'app-header',
@@ -35,7 +36,11 @@ export class HeaderComponent {
     return `Good evening, ${userName}! 🌙`;
   }
 
-  openDialog(): void {
+  openGithubDialog(): void {
     this.dialog.open(GithubReposDialog);
+  }
+
+  openTeamDialog() {
+    this.dialog.open(TeamDialogComponent);
   }
 }

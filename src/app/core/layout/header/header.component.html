@@ -5,12 +5,12 @@
   </div>
 
   <nav class="nav">
-    <a href="#" matButton="filled">
+    <button matButton="filled" (click)="openTeamDialog()">
       <mat-icon>group</mat-icon>
       My Team Members
-    </a>
+    </button>
 
-    <div class="github-icon" (click)="openDialog()">
+    <div class="github-icon" (click)="openGithubDialog()">
       <img src="assets/github-mark.svg" />
     </div>
 

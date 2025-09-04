@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { effect, Injectable, signal } from '@angular/core';
 import { TaskApi } from '../services/task.api';
 import {
   Task,
@@ -15,7 +15,11 @@ export class TasksStore {
   readonly totalTasks = signal(0);
   readonly currentPage = signal(1);
 
-  constructor(private api: TaskApi) {}
+  constructor(private api: TaskApi) {
+    effect(() => {
+      // console.log('Tasks changed:', this.tasks());
+    });
+  }
 
   async load(pageNumber = 1, pageSize = 5) {
     this.loading.set(true);
@@ -25,7 +29,7 @@ export class TasksStore {
 
       const res: PaginatedResponse = await firstValueFrom(
         this.api.getAllPaginated(pageNumber, pageSize)
-      )!; // assert non-null
+      )!;
       this.tasks.set(res.tasks);
       this.totalTasks.set(res.totalTasks);
       this.currentPage.set(res.pageNumber);
@@ -36,7 +40,7 @@ export class TasksStore {
     }
   }
 
-  add(dto: CreateTaskDto): void {
+  add(dto: any): void {
     this.api.create(dto).subscribe((task) => this.tasks.update((list) => [task, ...list]));
   }
 

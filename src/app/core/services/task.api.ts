@@ -21,7 +21,7 @@ export class TaskApi {
   getAllPaginated(pageNumber = 1, pageSize = 5): Observable<PaginatedResponse> {
     return this.http
       .get<PaginatedResponse>(`${this.base}?pageNumber=${pageNumber}&pageSize=${pageSize}`)
-      .pipe(delay(3000));
+      .pipe(delay(1000));
   }
 
   create(dto: CreateTaskDto): Observable<Task> {
@@ -29,6 +29,6 @@ export class TaskApi {
   }
 
   updateStatus(id: string, dto: UpdateTaskStatusDto): Observable<Task> {
-    return this.http.patch<Task>(`${this.base}/${id}`, dto);
+    return this.http.patch<Task>(`${this.base}/${id}/status`, dto);
   }
 }

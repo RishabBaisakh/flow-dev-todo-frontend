@@ -6,17 +6,24 @@ import { UserApi } from './app/core/services/user.api';
 import { AdminStore } from './app/core/state/admin.store';
 import { firstValueFrom } from 'rxjs';
 import { environment } from './environments/environment';
+import { TeamMembersStore } from './app/core/services/team-members';
 
 export function loadAdminFactory(userApi: UserApi, adminStore: AdminStore) {
   return () => {
     return firstValueFrom(userApi.getById(environment.adminUserId))
       .then((user) => {
         adminStore.adminUser = user;
-        console.log('Admin loaded at startup:', user);
       })
       .catch((err) => {
         console.error('Failed to load admin user', err);
       });
+  };
+}
+
+export function loadTeamMembersFactory(teamStore: TeamMembersStore) {
+  return () => {
+    teamStore.loadMembers(environment.adminUserId);
+    return Promise.resolve();
   };
 }
 
@@ -25,10 +32,17 @@ bootstrapApplication(App, {
     provideHttpClient(),
     UserApi,
     AdminStore,
+    TeamMembersStore,
     {
       provide: APP_INITIALIZER,
       useFactory: loadAdminFactory,
       deps: [UserApi, AdminStore],
+      multi: true,
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: loadTeamMembersFactory,
+      deps: [TeamMembersStore],
       multi: true,
     },
   ],

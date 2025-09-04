@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>View Task</h2>
+
+<mat-dialog-content class="dialog-content">
+  <div class="field">
+    <strong>Title:</strong>
+    <span>{{ task.title }}</span>
+  </div>
+
+  <div class="field">
+    <strong>Description:</strong>
+    <span>{{ task.description }}</span>
+  </div>
+
+  <div class="field">
+    <strong>Assigned User:</strong>
+    <span>{{ task.assignedUser?.name || 'Unassigned' }}</span>
+  </div>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Status</mat-label>
+    <mat-select [(ngModel)]="task.status">
+      <mat-option *ngFor="let s of statuses" [value]="s">{{ s }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Close</button>
+  <button mat-raised-button color="primary" (click)="updateStatus()">Update Status</button>
+</mat-dialog-actions>

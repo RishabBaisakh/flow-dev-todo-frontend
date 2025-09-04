@@ -33,9 +33,11 @@ export class TasksPage implements OnInit {
   ngOnInit() {
     this.store.load();
   }
+
   onCreate(dto: any) {
     this.store.add(dto);
   }
+
   onChangeStatus(id: string, status: any) {
     this.store.setStatus(id, { status });
   }
@@ -44,7 +46,7 @@ export class TasksPage implements OnInit {
     const dialogRef = this.dialog.open(TaskFormDialogComponent);
 
     dialogRef.afterClosed().subscribe((result) => {
-      this.onCreate(result);
+      if (result) this.onCreate(result);
     });
   }
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { Task } from '../../../../shared/models/task';
 import {
   AllTaskStatuses,
@@ -8,6 +8,14 @@ import {
 import { NgIf, NgClass, NgFor } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import {
+  TaskFormDialogComponent,
+  TaskFormDialogData,
+} from '../task-form-dialog/task-form-dialog.component';
+import { TeamMembersStore } from '../../../../core/services/team-members';
+import { TaskViewDialogComponent } from '../task-view-dialog/task-view-dialog.component';
+import { TasksStore } from '../../../../core/state/tasks.store';
 
 @Component({
   selector: 'app-task-list',
@@ -28,7 +36,11 @@ export class TaskListComponent {
 
   statuses = AllTaskStatuses;
   labels = TaskStatusLabels;
-  displayedColumns: string[] = ['-', 'title', 'assignee', 'status'];
+  displayedColumns: string[] = ['-', 'title', 'assignee', 'status', 'actions'];
+
+  private dialog = inject(MatDialog);
+  private memberStore = inject(TeamMembersStore);
+  private tasksStore = inject(TasksStore);
 
   get totalPages(): number {
     return Math.ceil(this.totalTasks / this.pageSize);
@@ -67,5 +79,25 @@ export class TaskListComponent {
       InProgress: 'app-background-color-inprogress',
       Completed: 'app-background-color-completed',
     }[status];
+  }
+
+  openViewDialog(task: Task) {
+    // Resolve assigned user object
+    const assignedUser = this.memberStore.getValue().find((u) => u.id === task.assignedUserId);
+
+    const dialogRef = this.dialog.open(TaskViewDialogComponent, {
+      width: '500px',
+      data: {
+        task: { ...task, assignedUser }, // attach assignedUser
+        users: this.memberStore.getValue(),
+      } as TaskFormDialogData,
+    });
+
+    dialogRef.afterClosed().subscribe((updatedTask) => {
+      if (updatedTask) {
+        this.tasksStore.setStatus(task.id, { status: updatedTask.status });
+        this.tasksStore.load(this.pageIndex, this.pageSize);
+      }
+    });
   }
 }

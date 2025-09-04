@@ -5,8 +5,9 @@ export interface Task {
   title: string;
   description: string;
   status: TaskStatus;
-  assignedUser: string;
+  assignedUserId: string;
   createdAt?: string;
+  assignedUser?: any;
 }
 
 export interface PaginatedResponse {
@@ -17,13 +18,11 @@ export interface PaginatedResponse {
   tasks: Task[];
 }
 
-// TODO: think more if we want to add Status while creating, because we can set it as default
-// Every todo item should begin with a default while creation
 export interface CreateTaskDto {
   title: string;
   description: string;
   status: TaskStatus;
-  assignedUser: string;
+  assignedUserId: string;
 }
 
 export interface UpdateTaskStatusDto {

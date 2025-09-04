@@ -87,3 +87,16 @@
     background-position: 400px 0;
   }
 }
+
+.clickable {
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.clickable:hover {
+  color: #1976d2;
+}
+
+.view-icon {
+  font-size: 20px;
+}

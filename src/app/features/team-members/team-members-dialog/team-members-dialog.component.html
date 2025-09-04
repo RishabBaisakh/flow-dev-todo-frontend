@@ -1,0 +1,47 @@
+<section>
+  <h2 mat-dialog-title>Team Members</h2>
+
+  <mat-dialog-content>
+    <div *ngIf="adminUser">
+      <h3>Admin</h3>
+      <ul class="members-list">
+        <li class="member-item">
+          <img [src]="'assets/avatars/' + adminUser.avatar" class="avatar" />
+          <span class="member-name">{{ adminUser.name }}</span>
+        </li>
+      </ul>
+    </div>
+
+    <div *ngIf="teamMembers.length; else empty">
+      <h3>Team Members</h3>
+      <ul class="members-list">
+        <li *ngFor="let member of teamMembers" class="member-item">
+          <img [src]="'assets/avatars/' + member.avatar" class="avatar" />
+          <p class="member-name">{{ member.name }}</p>
+          <button mat-icon-button color="warn" class="delete-btn" (click)="deleteMember(member.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <ng-template #empty>
+      <p>No team members yet.</p>
+    </ng-template>
+
+    <div class="add-member">
+      <mat-form-field appearance="outline" class="add-member-field">
+        <mat-label>Enter name</mat-label>
+        <input matInput [(ngModel)]="newMemberName" />
+      </mat-form-field>
+
+      <button mat-icon-button color="primary" class="add-btn" (click)="addMember()">
+        <mat-icon>person_add</mat-icon>
+      </button>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="close()">Close</button>
+  </mat-dialog-actions>
+</section>

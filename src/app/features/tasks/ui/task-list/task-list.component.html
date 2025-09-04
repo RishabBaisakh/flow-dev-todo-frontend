@@ -19,7 +19,7 @@
 
     <ng-container matColumnDef="assignee">
       <th mat-header-cell *matHeaderCellDef>Assignee</th>
-      <td mat-cell *matCellDef="let task">{{ task.assignedUser }}</td>
+      <td mat-cell *matCellDef="let task">{{ task.assignedUser.name }}</td>
     </ng-container>
 
     <ng-container matColumnDef="status">
@@ -28,6 +28,13 @@
         <span [ngClass]="getStatusStyleClass(task.status)" class="status-chip">
           {{ getStatusLabel(task.status) }}
         </span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let task">
+        <mat-icon class="clickable view-icon" (click)="openViewDialog(task)"> visibility </mat-icon>
       </td>
     </ng-container>
 
